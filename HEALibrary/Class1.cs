@@ -13,60 +13,73 @@ namespace HEALibrary
     [ClassInterface(ClassInterfaceType.AutoDual)]
     public class MainGate
     {
-        public MainGate()
+        private Dictionary<string, KeyValuePair<string, ParameterInfo[]>> gates = new Dictionary<string,KeyValuePair<string,ParameterInfo[]>>();
+        private Dictionary<string, Assembly> _assambly = new Dictionary<string, Assembly>();
+        public void InitializeMainGate()
         {
+            List<string> fileLines = new List<string>();
+            Assembly assembly;
+            List<MethodInfo> s = null;
             
+            foreach (string fileName in Directory.GetFiles("c:\\temp\\Modules\\", "*.dll"))
+            {
+                fileLines.Add(fileName);
+            }
+                       
+            foreach (string fileName in fileLines)
+            {
+                assembly = Assembly.LoadFrom(fileName);
+                s = assembly.GetTypes()[0].GetMethods().ToList();
+                _assambly.Add(assembly.GetTypes()[0].Name, assembly); 
+                foreach (MethodInfo item in s)
+                {
+                    if (item.Name != "ToString" && item.Name != "Equals" && item.Name != "GetHashCode" && item.Name != "GetType")
+                    {
+                        gates.Add(item.Name, new KeyValuePair<string, ParameterInfo[]>(assembly.GetTypes()[0].Name, item.GetParameters()));   
+                    }
+                }
+            }
         }
 
-        public string TestMainGate(string str)
+        public string TestMainGate(string str, string arg)
         {
             try
             {
-                List<string> fileLines = new List<string>();
+                
                 Assembly assembly;
                 Type type = null;
                 List<MethodInfo> s = null;
                 object instanceOfMyType = null;
                 object result = null;
                 string strResult = "";
-
-                int i = 0;
-
-                foreach (string fileName in Directory.GetFiles("c:\\temp\\Modules\\", "*.dll"))
+                if (gates.ContainsKey(str))
                 {
-                    fileLines.Add(fileName);
-                }
-                i = 0;
-                foreach (string fileName in fileLines)
-                {
-                    assembly = Assembly.LoadFrom(fileName);
+                    ParameterInfo[] par = gates[str].Value;
+                    assembly = _assambly[gates[str].Key];
                     type = assembly.GetTypes()[0];
                     instanceOfMyType = Activator.CreateInstance(type);
-                    s = assembly.GetTypes()[0].GetMethods().ToList();
-                    foreach (MethodInfo item in s)
-                    {
-                        //mf.Text += item.Name.ToString();
-                        if (item.Name != "ToString" && item.Name != "Equals" && item.Name != "GetHashCode" && item.Name != "GetType")
-                        {
-
-                            ParameterInfo[] parameters = item.GetParameters();
-                            object[] parametersArray = new object[] { str };
-                            result = item.Invoke(instanceOfMyType, parametersArray);
-                        }
-                    }
-                    strResult += " Dinamic method say:" + result.ToString();
+                    object[] parametersArray = new object[] { str };
+                    result = assembly.GetTypes()[0].GetMethod(str).Invoke(instanceOfMyType, parametersArray);
+                    strResult = "Test succesed: " + str + "DM:" + " Dinamic method say:" + result.ToString();
                 }
-
-                //MainForm mf = new MainForm();
-                //mf.Show();
-                //hj
-
-                return "Test succesed: " + str + "DM:" + strResult; 
+                else
+                {
+                    strResult = "Function not found!";
+                }
+                return strResult; 
             }
             catch (Exception ex)
             {
                 return ex.ToString();
             }
         }
+        public Dictionary<string, KeyValuePair<string, ParameterInfo[]>> Gates
+        {
+            get
+            {
+                return gates;
+            }
+        }
+
     }
 }

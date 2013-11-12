@@ -15,7 +15,11 @@ namespace HEALibrary
 
         public string class1test(String s)
         {
-            return "Hello world testlib1" + s;
+            return "Result from testlib1" + s;
+        }
+        public string class2test(String s, int a)
+        {
+            return "Result from testlib1" + s + a.ToString();
         }
     }
 }
