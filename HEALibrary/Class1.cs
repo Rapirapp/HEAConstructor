@@ -32,7 +32,7 @@ namespace HEALibrary
 
                 int i = 0;
 
-                foreach (string fileName in Directory.GetFiles("c:\\temp\\Modules\\"))
+                foreach (string fileName in Directory.GetFiles("c:\\temp\\Modules\\", "*.dll"))
                 {
                     fileLines.Add(fileName);
                 }

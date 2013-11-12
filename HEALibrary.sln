@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HEALibrary", "HEALibrary\HEALibrary.csproj", "{9AA2E41F-11CE-4585-AB89-FCB8DB160908}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testlib1", "testlib1\testlib1.csproj", "{0E328C19-EB8E-4CD0-ACD7-9D575ACFC7B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{9AA2E41F-11CE-4585-AB89-FCB8DB160908}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AA2E41F-11CE-4585-AB89-FCB8DB160908}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AA2E41F-11CE-4585-AB89-FCB8DB160908}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E328C19-EB8E-4CD0-ACD7-9D575ACFC7B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E328C19-EB8E-4CD0-ACD7-9D575ACFC7B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E328C19-EB8E-4CD0-ACD7-9D575ACFC7B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E328C19-EB8E-4CD0-ACD7-9D575ACFC7B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
